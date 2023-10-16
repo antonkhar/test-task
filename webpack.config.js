@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const devServer = (isDev) => !isDev ? {} : {
     devServer: {
@@ -24,7 +25,15 @@ module.exports = ({develop}) => ({
       }),
       new MiniCssExtractPlugin({
           filename: './styles/main.css'
-      })
+      }),
+      new CopyPlugin({
+        patterns: [
+            { from: './src/PHPMailer', to: 'PHPMailer' },
+            { from: './src/send.php', to: 'send.php' },
+            { from: './src/images/burger-open.png', to: 'burger-open.png' },
+            { from: './src/images/burger-close.png', to: 'burger-close.png' },
+        ],
+      }),
   ],
   module: {
       rules: [
